@@ -1,7 +1,7 @@
 package tech.brownbear.resources;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.nio.file.*;
@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class AbstractResourceFetcher implements ResourceFetcher {
-    protected static Logger logger = LogManager.getRootLogger();
-
+    protected static Logger logger = LoggerFactory.getLogger(AbstractResourceFetcher.class);
+    
     protected final Set<String> directories;
 
     @FunctionalInterface
