@@ -22,7 +22,6 @@ public abstract class AbstractResourceFetcher implements ResourceFetcher {
 
     public AbstractResourceFetcher(Set<String> directories) {
         this.directories = directories;
-        logger.info("Testing Logging : " + directories);
     }
 
     protected abstract void visitMatchingFiles(String directory, Predicate<Path> filter, Handler handler);
