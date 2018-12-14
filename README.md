@@ -50,6 +50,6 @@ fetcher.visit(filter, handler);
 ```
 
 ## Note
-Resource managment is still a bit of a blackbox to me and I find sometimes that I need
+Resource management is still a bit of a blackbox to me and I find sometimes that I need
 to visit the resources to load them properly instead of just dealing with the `URL` objects
 as the first method does.

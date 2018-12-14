@@ -61,7 +61,8 @@ public class LocalResourceFetcher extends AbstractResourceFetcher {
                 });
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            // Ignore these exceptions as they are expected in production
+            return;
         }
     }
 }
