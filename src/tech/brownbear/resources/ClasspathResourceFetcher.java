@@ -1,12 +1,10 @@
 package tech.brownbear.resources;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.Collections;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -34,8 +32,8 @@ public class ClasspathResourceFetcher extends AbstractResourceFetcher {
                 logger.info("Invalid directory '" + directory + "'");
                 return;
             }
-            synchronized (this) {
-                try (FileSystem fs = FileSystems.newFileSystem(dir.toURI(), Collections.emptyMap())) {
+            synchronized (ClasspathResourceFetcher.class) {
+                try (FileSystem fs = fs(dir.toURI())) {
                     try (Stream<Path> paths = Files.walk(fs.getPath(directory))) {
                         paths.filter(filter).forEach(path -> {
                             URL resource = getResource(path.toString());
@@ -46,6 +44,14 @@ public class ClasspathResourceFetcher extends AbstractResourceFetcher {
             }
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private FileSystem fs(URI uri) throws IOException {
+        try {
+            return FileSystems.newFileSystem(uri, Collections.emptyMap());
+        } catch (FileSystemAlreadyExistsException e) {
+            return FileSystems.getFileSystem(uri);
         }
     }
 }
